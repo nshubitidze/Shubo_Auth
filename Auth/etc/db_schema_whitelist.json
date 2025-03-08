@@ -1,0 +1,7 @@
+{
+    "authorization_role": {
+        "column": {
+            "store_id": true
+        }
+    }
+}

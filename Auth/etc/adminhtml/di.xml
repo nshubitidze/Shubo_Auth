@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--  Filter grid collection based on store id of admin user (sales grid)  -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <plugin name="gridCollectionStoreFilterPlugin" type="Shubo\Auth\Plugin\View\Element\UiComponent\DataProvider\SearchResult"/>
+    </type>
+
+    <!--  Filter grid collection based on store id of admin user (products)  -->
+    <type name="Magento\Catalog\Ui\DataProvider\Product\ProductDataProvider">
+        <plugin name="shipmentStoreAccessCheck" type="Shubo\Auth\Plugin\Ui\DataProvider\Product\ProductDataProvider"/>
+    </type>
+
+    <!--  Check if admin user has access to order view action based on store id  -->
+    <type name="Magento\Sales\Controller\Adminhtml\Order">
+        <plugin name="orderStoreAccessCheck" type="Shubo\Auth\Plugin\Controller\Adminhtml\Order"/>
+    </type>
+
+    <!--  Check if admin user has access to invoice view action based on store id  -->
+    <type name="Magento\Sales\Controller\Adminhtml\Invoice\AbstractInvoice\View">
+        <plugin name="invoiceStoreAccessCheck" type="Shubo\Auth\Plugin\Controller\Adminhtml\Invoice\AbstractInvoice\View"/>
+    </type>
+
+    <!--  Check if admin user has access to shipment view action based on store id  -->
+    <type name="Magento\Sales\Controller\Adminhtml\Shipment\AbstractShipment\View">
+        <plugin name="shipmentStoreAccessCheck" type="Shubo\Auth\Plugin\Controller\Adminhtml\Shipment\AbstractShipment\View"/>
+    </type>
+
+    <!--  Check if admin user has access to product view action based on store id  -->
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Edit">
+        <plugin name="shipmentStoreAccessCheck" type="Shubo\Auth\Plugin\Controller\Adminhtml\Product\Edit"/>
+    </type>
+</config>

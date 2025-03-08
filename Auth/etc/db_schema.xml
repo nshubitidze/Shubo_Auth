@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="authorization_role">
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store Id"/>
+    </table>
+
+    <constraint xsi:type="foreign" name="AUTHORIZATION_ROLE_STORE_ID_STORE_STORE_ID"
+                table="authorization_role" column="store_id" referenceTable="store"
+                referenceColumn="store_id" onDelete="CASCADE"/>
+</schema>
