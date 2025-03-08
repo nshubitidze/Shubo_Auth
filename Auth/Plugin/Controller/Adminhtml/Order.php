@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Shubo\Auth\Plugin\Controller\Adminhtml;
 
 use Magento\Framework\Registry;
-use Magento\Backend\Model\Auth\Session;
+use Shubo\Auth\Helper\ScopeHelper;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Sales\Controller\Adminhtml\Order as Subject;
@@ -14,15 +14,15 @@ class Order
 {
     /**
      * @param Registry $registry
-     * @param Session $authSession
      * @param RedirectFactory $redirectFactory
      * @param ManagerInterface $messageManager
+     * @param ScopeHelper $scopeHelper
      */
     public function __construct(
         protected Registry $registry,
-        protected Session $authSession,
         protected RedirectFactory $redirectFactory,
-        protected ManagerInterface $messageManager
+        protected ManagerInterface $messageManager,
+        protected ScopeHelper $scopeHelper
     ) {}
 
     /**
@@ -31,19 +31,14 @@ class Order
      * @return Redirect|mixed
      */
     public function afterExecute(Subject $subject, $result) {
-        $adminUser = $this->authSession->getUser();
-        $storeId = $adminUser->getRole()->getStoreId();
+        $order = $this->registry->registry('current_order');
 
-        if ($storeId) {
-            $order = $this->registry->registry('current_order');
+        if ($order && !$this->scopeHelper->hasAccessToStore((int)$order->getStoreId())) {
+            $this->messageManager->addErrorMessage(__('Order Does not exist.'));
+            $resultRedirect = $this->redirectFactory->create();
+            $resultRedirect->setPath('sales/*/');
 
-            if ($order && $storeId !== $order->getStoreId()) {
-                $this->messageManager->addErrorMessage(__('Order Does not exist.'));
-                $resultRedirect = $this->redirectFactory->create();
-                $resultRedirect->setPath('sales/*/');
-
-                return $resultRedirect;
-            }
+            return $resultRedirect;
         }
 
         return $result;

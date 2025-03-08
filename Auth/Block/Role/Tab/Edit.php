@@ -15,6 +15,16 @@ use Magento\Authorization\Model\ResourceModel\Role\CollectionFactory as RoleColl
 
 class Edit extends SourceEdit
 {
+    /**
+     * @param RoleCollectionFactory $roleCollectionFactory
+     * @param Context $context
+     * @param AclRetriever $aclRetriever
+     * @param RootResource $rootResource
+     * @param CollectionFactory $rulesCollectionFactory
+     * @param ProviderInterface $aclResourceProvider
+     * @param Data $integrationData
+     * @param array $data
+     */
     public function __construct(
         protected RoleCollectionFactory $roleCollectionFactory,
         Context $context,

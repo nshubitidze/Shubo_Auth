@@ -3,7 +3,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Shubo_Auth">
         <sequence>
+            <module name="Magento_User"/>
             <module name="Magento_Authorization"/>
+            <module name="Magento_Catalog"/>
+            <module name="Magento_Sales"/>
         </sequence>
     </module>
 </config>
